@@ -13,7 +13,6 @@ public class Move_Camera : MonoBehaviour
   
     void Start()
     {
-
     }
 
     // Update is called once per frame
