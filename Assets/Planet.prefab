@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 2776421118375987294}
   - component: {fileID: 4156563715129459843}
   - component: {fileID: 4139032532425659578}
+  - component: {fileID: 3651841300404233151}
   m_Layer: 0
   m_Name: Planet
   m_TagString: Untagged
@@ -130,7 +131,7 @@ MonoBehaviour:
     key0: {r: 0.764151, g: 0.1549929, b: 0.1549929, a: 1}
     key1: {r: 0.8207547, g: 0.81107086, b: 0.10453009, a: 1}
     key2: {r: 0.23529413, g: 0.23529413, b: 0.23529413, a: 0}
-    key3: {r: 0.23930284, g: 0.7647059, b: 0.15686274, a: 0}
+    key3: {r: 0.76862746, g: 0.76862746, b: 0.76862746, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
@@ -225,3 +226,17 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &3651841300404233151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5251021310696914787}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1741a6edd196f2e48b864acdc3a7733c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mass: 10
+  planetName: Jupiter
