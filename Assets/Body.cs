@@ -1,8 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Body : MonoBehaviour
@@ -10,6 +5,9 @@ public class Body : MonoBehaviour
     public float mass = 100;
     public Vector3 velocity;
     public Vector3 angularVelocity;
+    public PlanetList PList;
+    public string planetName = "Default";
+    public GameObject UIDisplay;
 
     public float radius
     {
@@ -29,6 +27,14 @@ public class Body : MonoBehaviour
     {
         float scale = radius / 1500;
         transform.localScale = new(scale, scale, scale);
+
+        PList = GameObject.FindGameObjectWithTag("GameManager").GetComponent<PlanetList>();
+
+        int i = Random.Range(0, PList.nameList.Count);
+        planetName = PList.nameList[i];
+        PList.nameList.Remove(PList.nameList[i]);
+
+        UIDisplay = GameObject.FindGameObjectWithTag("PlanetInfo");
     }
 
     void OnTriggerEnter(Collider other)
@@ -50,5 +56,11 @@ public class Body : MonoBehaviour
     {
         Quaternion Δrotation = Quaternion.Euler(angularVelocity * Time.deltaTime);
         transform.rotation = Δrotation * transform.rotation;
+    }
+
+    public void DisplayInfo()
+    {
+        //UIDisplay.SetActive(!UIDisplay.activeSelf);
+        UIDisplay.GetComponent<PlanetInfo>().currentPlanet = gameObject;
     }
 }
