@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEditor;
 using System;
 
-public class TestScript : MonoBehaviour
+public class RandomTexture : MonoBehaviour
 {
     public float mass;
     public Vector3 velocity;
@@ -55,13 +55,13 @@ public class TestScript : MonoBehaviour
     }
 }
 
-[CustomEditor(typeof(TestScript))]
-public class MyScriptEditor : Editor
+[CustomEditor(typeof(RandomTexture))]
+public class RandomTextureEditor : Editor
 {
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
-        var testScript = target as TestScript;
+        var testScript = target as RandomTexture;
         if (GUILayout.Button("Initialize"))
         {
             testScript.Initialize();
