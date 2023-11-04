@@ -50,6 +50,7 @@ public class Body : MonoBehaviour
         transform.position = (mass * transform.position + otherBody.mass * otherBody.transform.position) / totalMass;
         mass = totalMass;
         Start();
+        DisplayInfo();
     }
 
     void Update()

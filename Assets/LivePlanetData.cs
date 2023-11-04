@@ -7,7 +7,6 @@ public class LivePlanetData
     public float mass;
     public Vector3 position;
     public Vector3 velocity;
-    public Vector3 angularVelocity;
 
     public static LivePlanetData CreateFromJSON(string jsonString)
     {
