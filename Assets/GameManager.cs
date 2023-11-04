@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject body;
+
+    public float adjustmentFactor;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,5 +45,14 @@ public class GameManager : MonoBehaviour
         }
 
         // Vector3 momentum = bodies.Aggregate(Vector3.zero, (acc, b) => acc + b.momentum);
+    }
+
+    public void AddBody()
+    {
+        Vector3 mousePosition = Input.mousePosition;
+        mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
+        Debug.Log(mousePosition); //make it spawn in front of camera instead
+        mousePosition.z += adjustmentFactor;
+        Instantiate(body, mousePosition, Quaternion.identity);
     }
 }

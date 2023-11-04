@@ -10,23 +10,24 @@ public class AddObject : MonoBehaviour
 
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
 
-    public void AddObjects(){
+    public void AddObjects()
+    {
         Vector3 mousePosition = Input.mousePosition;
         mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
         Debug.Log(mousePosition); //make it spawn in front of camera instead
         mousePosition.z += adjustmentFactor;
         Instantiate(sphere, mousePosition, Quaternion.identity);
-        
-        
+
+
     }
 }
