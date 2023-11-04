@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - PlanetInfo
+  - PublicFunctions
   layers:
   - Default
   - TransparentFX
