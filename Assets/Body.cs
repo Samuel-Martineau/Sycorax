@@ -41,6 +41,7 @@ public class Body : MonoBehaviour
     {
         Body otherBody = other.gameObject.GetComponent<Body>();
         if (GetInstanceID() < other.GetInstanceID()) return;
+        
         Destroy(other.gameObject);
         Vector3 totalMomentum = Momentum + otherBody.Momentum;
         Vector3 totalAngularMomentum = AngularMomentum + otherBody.AngularMomentum;
