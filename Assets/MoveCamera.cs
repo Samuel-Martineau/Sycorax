@@ -10,6 +10,7 @@ public class MoveCamera : MonoBehaviour
     private float x;
     private float y;
     private Vector3 rotateValue;
+    public bool moving = true;
 
     void Start()
     {
@@ -18,29 +19,43 @@ public class MoveCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.D))
-        {
-            transform.Translate(new Vector3(speed * Time.deltaTime, 0, 0));
+
+        if(moving){
+            if (Input.GetKey(KeyCode.D))
+            {
+                transform.Translate(new Vector3(speed * Time.deltaTime, 0, 0));
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                transform.Translate(new Vector3(-speed * Time.deltaTime, 0, 0));
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                transform.Translate(new Vector3(0, -speed * Time.deltaTime, 0));
+            }
+            if (Input.GetKey(KeyCode.W))
+            {
+                transform.Translate(new Vector3(0, speed * Time.deltaTime, 0));
+            }
+            if (Input.GetKey(KeyCode.E))
+            {
+                transform.Translate(new Vector3(0, 0, -speed * Time.deltaTime));
+            }
+            if (Input.GetKey(KeyCode.Q))
+            {
+                transform.Translate(new Vector3(0, 0, speed * Time.deltaTime));
+            }
+            y = Input.GetAxis("Mouse X");
+            x = Input.GetAxis("Mouse Y");
+            //Debug.Log(x + ":" + y);
+            rotateValue = new Vector3(x, y * -1, 0);
+            transform.eulerAngles = transform.eulerAngles - rotateValue;
         }
-        if (Input.GetKey(KeyCode.A))
-        {
-            transform.Translate(new Vector3(-speed * Time.deltaTime, 0, 0));
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            transform.Translate(new Vector3(0, -speed * Time.deltaTime, 0));
-        }
-        if (Input.GetKey(KeyCode.W))
-        {
-            transform.Translate(new Vector3(0, speed * Time.deltaTime, 0));
-        }
-        if (Input.GetKey(KeyCode.E))
-        {
-            transform.Translate(new Vector3(0, 0, -speed * Time.deltaTime));
-        }
-        if (Input.GetKey(KeyCode.Q))
-        {
-            transform.Translate(new Vector3(0, 0, speed * Time.deltaTime));
+        
+
+
+        if(Input.GetKeyDown(KeyCode.Z)){
+            moving = !moving;
         }
 
 
@@ -65,11 +80,7 @@ public class MoveCamera : MonoBehaviour
         //     transform.Rotate(1*rotationSpeed*Time.deltaTime,0,0);
         //    }
 
-        y = Input.GetAxis("Mouse X");
-        x = Input.GetAxis("Mouse Y");
-        //Debug.Log(x + ":" + y);
-        rotateValue = new Vector3(x, y * -1, 0);
-        transform.eulerAngles = transform.eulerAngles - rotateValue;
+        
 
     }
 }

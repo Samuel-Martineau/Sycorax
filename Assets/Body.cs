@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Body : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class Body : MonoBehaviour
     public PlanetList PList;
     public string planetName = "Default";
     public GameObject UIDisplay;
+
 
     public float radius
     {
@@ -25,6 +27,7 @@ public class Body : MonoBehaviour
     }
     void Start()
     {
+
         float scale = radius / 1500;
         transform.localScale = new(scale, scale, scale);
 
@@ -35,12 +38,16 @@ public class Body : MonoBehaviour
         PList.nameList.Remove(PList.nameList[i]);
 
         UIDisplay = GameObject.FindGameObjectWithTag("PlanetInfo");
+
+        
+
     }
 
     void OnTriggerEnter(Collider other)
     {
         Body otherBody = other.gameObject.GetComponent<Body>();
-        if (GetInstanceID() < other.GetInstanceID()) return;
+        
+        if (gameObject.GetInstanceID() < other.gameObject.GetInstanceID()) return;
         
         Destroy(other.gameObject);
         Vector3 totalMomentum = Momentum + otherBody.Momentum;
@@ -64,5 +71,9 @@ public class Body : MonoBehaviour
     {
         //UIDisplay.SetActive(!UIDisplay.activeSelf);
         UIDisplay.GetComponent<PlanetInfo>().currentPlanet = gameObject;
+    }
+
+    void MassSlider(){
+        
     }
 }
