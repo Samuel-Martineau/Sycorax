@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEditor;
-using System;
 
 public class RandomTexture : MonoBehaviour
 {
@@ -55,16 +53,16 @@ public class RandomTexture : MonoBehaviour
     }
 }
 
-[CustomEditor(typeof(RandomTexture))]
-public class RandomTextureEditor : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        DrawDefaultInspector();
-        var testScript = target as RandomTexture;
-        if (GUILayout.Button("Initialize"))
-        {
-            testScript.Initialize();
-        }
-    }
-}
+// [CustomEditor(typeof(RandomTexture))]
+// public class RandomTextureEditor : Editor
+// {
+//     public override void OnInspectorGUI()
+//     {
+//         DrawDefaultInspector();
+//         var testScript = target as RandomTexture;
+//         if (GUILayout.Button("Initialize"))
+//         {
+//             testScript.Initialize();
+//         }
+//     }
+// }

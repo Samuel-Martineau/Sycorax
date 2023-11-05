@@ -22,10 +22,9 @@ public class LivePlanetDataFetcher : MonoBehaviour
     void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
-        StartCoroutine(Load());
     }
 
-    IEnumerator Load()
+    public IEnumerator Load()
     {
         using UnityWebRequest webRequest = UnityWebRequest.Get("https://www.wolframcloud.com/obj/a596e7a7-8d48-46b2-aa18-c2a1fcd091eb");
         yield return webRequest.SendWebRequest();
@@ -47,6 +46,7 @@ public class LivePlanetDataFetcher : MonoBehaviour
                         Utilities.arrayToVector3(planet.velocity)
                     );
                     gameObject.GetComponent<Renderer>().material.mainTexture = texture;
+                    gameObject.GetComponent<Body>().planetName = planet.name;
                     Destroy(gameObject.GetComponent<RandomTexture>());
                 }
                 break;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+//using UnityEngine.Rendering.PostProcessing
 
 public class PlanetInfo : MonoBehaviour
 {
@@ -23,7 +24,8 @@ public class PlanetInfo : MonoBehaviour
     Body Info;
     void Start()
     {
-        slider.onValueChanged.AddListener((value) => {
+        slider.onValueChanged.AddListener((value) =>
+        {
             currentPlanet.GetComponent<Body>().mass = value;
         });
     }
@@ -32,17 +34,19 @@ public class PlanetInfo : MonoBehaviour
     void Update()
     {
         //TMP_text PlanetNameText = PlanetName.GetComponent<TMP_Text>();
-        if (currentPlanet){
-             Info = currentPlanet.GetComponent<Body>();
+        if (currentPlanet)
+        {
+            Info = currentPlanet.GetComponent<Body>();
             NameText.text = Info.planetName;
 
             massText.text = $"Mass: {Info.mass}";
         }
-        else{
+        else
+        {
             NameText.text = "";
-            
+
         }
-       
+
 
 
 

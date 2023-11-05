@@ -2,6 +2,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+public enum GameMode
+{
+    Sandbox = 0,
+    SolarSystem = 1
+}
+
 public class GameManager : MonoBehaviour
 {
     public GameObject bodyPrefab;
@@ -16,9 +22,18 @@ public class GameManager : MonoBehaviour
     public float constantζ = 1e5f; // s / t -- Time Scale
     public float constantε = 1000;
 
+    public GameMode gameMode = GameMode.Sandbox;
+    public bool logScale = false;
+
     // Start is called before the first frame update
     void Start()
     {
+        if (gameMode == GameMode.SolarSystem) StartCoroutine(GetComponent<LivePlanetDataFetcher>().Load());
+    }
+
+    public void test()
+    {
+        StartCoroutine(GetComponent<LivePlanetDataFetcher>().Load());
     }
 
     // Update is called once per frame
@@ -56,16 +71,25 @@ public class GameManager : MonoBehaviour
         // Debug.Log(1 / Time.deltaTime);
     }
 
-    public void AddBody()
+    public void AddBodyInteractive(float mass, float cameraDistance, Vector3 velocity, Vector3 angularVelocity)
     {
         Vector3 mousePosition = Input.mousePosition;
         mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
-        Debug.Log(mousePosition); //make it spawn in front of camera instead
-        mousePosition.z += adjustmentFactor;
-        Instantiate(bodyPrefab, mousePosition, Quaternion.identity);
+        //Debug.Log(mousePosition); //make it spawn in front of camera instead
+        mousePosition.z += cameraDistance;
+
+
+        AddBody(Mathf.Pow(10, mass), mousePosition, velocity, angularVelocity);
+
+
     }
 
     public GameObject AddBody(float mass, Vector3 position, Vector3 velocity)
+    {
+        return AddBody(mass, position, velocity, Vector3.zero);
+    }
+
+    public GameObject AddBody(float mass, Vector3 position, Vector3 velocity, Vector3 angularVelocity)
     {
         GameObject gameObject = Instantiate(bodyPrefab, position, Quaternion.identity);
         Body body = gameObject.GetComponent<Body>();

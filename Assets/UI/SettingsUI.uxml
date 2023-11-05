@@ -1,10 +1,17 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/SettingsUI.uss?fileID=7433441132597879392&amp;guid=ee8e2beaa0688404083c058a08811b2e&amp;type=3#SettingsUI" />
-    <ui:VisualElement name="Container" style="flex-grow: 1; background-color: rgba(255, 255, 255, 0.39); transition-duration: 0.3s;">
-        <ui:Label tabindex="-1" text="Settings" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label" style="font-size: 20px; -unity-font-style: bold;" />
-        <ui:Slider picking-mode="Ignore" label="Time Acceleration" value="0" high-value="100" show-input-field="true" />
-        <ui:RadioButtonGroup label="Modes" value="-1" choices="Sandbox,Solar System" name="Modes" />
-        <ui:Toggle label="Real Scale" name="RealScale" />
-        <ui:Button text="Close" parse-escape-sequences="true" display-tooltip-when-elided="true" name="CloseButton" />
-    </ui:VisualElement>
+    <ui:ScrollView>
+        <ui:VisualElement name="Container" style="flex-grow: 1; background-color: rgba(255, 255, 255, 0.39); transition-duration: 0.3s;">
+            <ui:Label tabindex="-1" text="Settings" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label" style="font-size: 20px; -unity-font-style: bold;" />
+            <ui:Slider picking-mode="Ignore" label="Gravitational Constant" value="0" high-value="-9" show-input-field="true" name="GSlider" low-value="-11" style="justify-content: center;" />
+            <ui:Slider picking-mode="Ignore" label="Density" value="0" high-value="5" show-input-field="true" name="DensitySlider" low-value="-5" style="justify-content: center;" />
+            <ui:Slider picking-mode="Ignore" label="Length Scale" value="0" high-value="15" show-input-field="true" name="LengthScaleSlider" low-value="5" style="justify-content: center;" />
+            <ui:Slider picking-mode="Ignore" label="Size Scale" value="0" high-value="8" show-input-field="true" name="SizeScaleSlider" low-value="-3" style="justify-content: center;" />
+            <ui:Slider picking-mode="Ignore" label="Time Scale" value="0" high-value="10" show-input-field="true" name="TimeScaleSlider" low-value="1" style="justify-content: center;" />
+            <ui:Slider picking-mode="Ignore" label="Time Precision" value="0" high-value="4" show-input-field="true" name="TimePrecisionSlider" />
+            <ui:RadioButtonGroup label="Modes" value="-1" choices="Sandbox,Solar System" name="Modes" />
+            <ui:Toggle label="Real Scale" name="RealScale" />
+            <ui:Button text="Close" parse-escape-sequences="true" display-tooltip-when-elided="true" name="CloseButton" />
+        </ui:VisualElement>
+    </ui:ScrollView>
 </ui:UXML>

@@ -35,10 +35,14 @@ public class Body : MonoBehaviour
 
         if (position.magnitude == 0) position = transform.position * gameManager.constantκ;
 
-        planetList = GameObject.FindGameObjectWithTag("GameManager").GetComponent<PlanetList>();
-        int i = Random.Range(0, planetList.nameList.Count);
-        planetName = planetList.nameList[i];
-        planetList.nameList.Remove(planetList.nameList[i]);
+        if (planetName == "Default")
+        {
+            planetList = GameObject.FindGameObjectWithTag("GameManager").GetComponent<PlanetList>();
+            int i = Random.Range(0, planetList.nameList.Count);
+            planetName = planetList.nameList[i];
+            planetList.nameList.Remove(planetList.nameList[i]);
+        }
+
         UIDisplay = GameObject.FindGameObjectWithTag("PlanetInfo");
     }
 
@@ -66,7 +70,7 @@ public class Body : MonoBehaviour
     {
         Quaternion Δrotation = Quaternion.Euler(angularVelocity * Time.deltaTime);
         transform.rotation = Δrotation * transform.rotation;
-        float scale = Mathf.Pow(Mathf.Log10(mass), 2) / gameManager.constantλ;
+        float scale = (gameManager.logScale ? Mathf.Pow(Mathf.Log10(mass), 2) : mass) / gameManager.constantλ;
         transform.localScale = new(scale, scale, scale);
         transform.position = position / gameManager.constantκ;
         // transform.position = Utilities.arrayToVector3(Utilities.vector3ToArray(position).Select(x => Mathf.Sign(x) * Mathf.Log(Mathf.Abs(x) + 1) /* * Mathf.Pow(1 + Mathf.Pow(10, -Mathf.Abs(x) + gameManager.constantμ), -1) */).ToArray()) / gameManager.constantκ;
@@ -76,8 +80,9 @@ public class Body : MonoBehaviour
 
     public void DisplayInfo()
     {
-        //UIDisplay.SetActive(!UIDisplay.activeSelf);
-        // UIDisplay.GetComponent<PlanetInfo>().currentPlanet = gameObject;
+        Debug.Log("ran");
+        UIDisplay.SetActive(!UIDisplay.activeSelf);
+        UIDisplay.GetComponent<PlanetInfo>().currentPlanet = gameObject;
     }
 
     void MassSlider()
@@ -85,7 +90,8 @@ public class Body : MonoBehaviour
 
     }
 
-    public void SetValues(float mass1, float distanceFromCamera1, Vector3 initialVelocity1, Vector3 angularVelocity1){
+    public void SetValues(float mass1, float distanceFromCamera1, Vector3 initialVelocity1, Vector3 angularVelocity1)
+    {
         mass = mass1;
         velocity = initialVelocity1;
         angularVelocity = angularVelocity1;

@@ -3,10 +3,10 @@
     <ui:ScrollView horizontal-scroller-visibility="Auto">
         <ui:VisualElement name="Container" style="flex-grow: 1; background-color: rgba(255, 255, 255, 0.39); transition-duration: 0.3s;">
             <ui:Label tabindex="-1" text="Create Body" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Label" style="font-size: 20px; -unity-font-style: bold;" />
-            <ui:Slider picking-mode="Ignore" label="Mass" value="0" high-value="100" show-input-field="true" name="MassSlider" />
+            <ui:Slider picking-mode="Ignore" label="Mass" value="0" high-value="30" show-input-field="true" name="MassSlider" low-value="15" />
             <ui:Slider picking-mode="Ignore" label="Distance From Camera" value="0" high-value="100" show-input-field="true" name="DistanceFromCameraSlider" focusable="true" />
             <ui:Vector3Field label="Initial Velocity" name="InitialVelocity" />
-            <ui:Vector3Field label="Angular Velocity" />
+            <ui:Vector3Field label="Angular Velocity" name="AngularVelocity" />
             <ui:Button text="Add Body" parse-escape-sequences="true" display-tooltip-when-elided="true" name="AddButton" />
             <ui:Button text="Close" parse-escape-sequences="true" display-tooltip-when-elided="true" name="CloseButton" />
         </ui:VisualElement>
