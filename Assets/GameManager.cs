@@ -8,6 +8,14 @@ public class GameManager : MonoBehaviour
 
     public float adjustmentFactor;
 
+    public float constantG = 6.6743e-11f; // m³ kg² / s² -- Gravitation
+    public float constantρ = 1; // kg / m³ -- Density
+    public float constantκ = 1e10f; // m / u -- Length Scale
+    // public float constantμ = 1e0f; // -- Length treshold
+    public float constantλ = 300; // m / u -- Size Scale
+    public float constantζ = 1e5f; // s / t -- Time Scale
+    public float constantε = 1000;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,10 +27,9 @@ public class GameManager : MonoBehaviour
 
         IEnumerable<Body> bodies = FindObjectsOfType<Body>();
 
-        int iterCount = 500;
-        for (int i = 0; i < iterCount; i++)
+        for (int i = 0; i < constantε; i++)
         {
-            float Δtime = Time.deltaTime / iterCount / Constants.ζ;
+            float Δtime = Time.deltaTime / constantε * constantζ;
 
             IEnumerable<Vector3> accelerations = bodies.Select(self =>
             {
@@ -30,7 +37,7 @@ public class GameManager : MonoBehaviour
                 {
                     if (self == other) return Vector3.zero;
                     Vector3 difference = other.position - self.position;
-                    float magnitude = Constants.G * other.mass / Mathf.Pow(difference.magnitude, 2);
+                    float magnitude = constantG * other.mass / Mathf.Pow(difference.magnitude, 2);
                     Vector3 orientation = difference / difference.magnitude;
                     return magnitude * orientation;
                 }).Aggregate(Vector3.zero, (acc, vec) => acc + vec);
@@ -44,7 +51,9 @@ public class GameManager : MonoBehaviour
             };
         }
 
-        // Vector3 momentum = bodies.Aggregate(Vector3.zero, (acc, b) => acc + b.momentum);
+        // Vector3 momentum = bodies.Aggregate(Vector3.zero, (acc, b) => acc + b.Momentum);
+        // Debug.Log(Mathf.Log10(momentum.magnitude));
+        // Debug.Log(1 / Time.deltaTime);
     }
 
     public void AddBody()
@@ -56,12 +65,15 @@ public class GameManager : MonoBehaviour
         Instantiate(bodyPrefab, mousePosition, Quaternion.identity);
     }
 
-    public void AddBody(float mass, Vector3 position, Vector3 velocity)
+    public GameObject AddBody(float mass, Vector3 position, Vector3 velocity)
     {
         GameObject gameObject = Instantiate(bodyPrefab, position, Quaternion.identity);
         Body body = gameObject.GetComponent<Body>();
         body.mass = mass;
-        body.transform.position = position;
+        body.position = position;
         body.velocity = velocity;
+        body.transform.position = Vector3.zero;
+        body.angularVelocity = Vector3.zero;
+        return gameObject;
     }
 }

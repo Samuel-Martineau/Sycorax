@@ -3,9 +3,12 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections;
 using System.Linq;
+using System.Collections.Generic;
 
 public class LivePlanetDataFetcher : MonoBehaviour
 {
+    public Texture2D[] planetTextures = new Texture2D[9];
+
     private class LivePlanetData
     {
         public string name;
@@ -24,7 +27,7 @@ public class LivePlanetDataFetcher : MonoBehaviour
 
     IEnumerator Load()
     {
-        using UnityWebRequest webRequest = UnityWebRequest.Get("https://www.wolframcloud.com/obj/ef34fc8d-12d0-4a44-af3d-45876e4fd470");
+        using UnityWebRequest webRequest = UnityWebRequest.Get("https://www.wolframcloud.com/obj/a596e7a7-8d48-46b2-aa18-c2a1fcd091eb");
         yield return webRequest.SendWebRequest();
 
         switch (webRequest.result)
@@ -35,13 +38,17 @@ public class LivePlanetDataFetcher : MonoBehaviour
                 Debug.LogError(webRequest.error);
                 break;
             case UnityWebRequest.Result.Success:
-                LivePlanetData[] planets = JsonConvert.DeserializeObject<LivePlanetData[]>(webRequest.downloadHandler.text);
-                var planet = planets[1];
-                gameManager.AddBody(
-                    planet.mass,
-                    new Vector3(planet.position[0], planet.position[1], planet.position[2]), // TODO: Understand why position scale is wrong
-                    new Vector3(planet.velocity[0], planet.velocity[1], planet.velocity[2])
-                );
+                (LivePlanetData, Texture2D)[] planets = JsonConvert.DeserializeObject<LivePlanetData[]>(webRequest.downloadHandler.text).Zip(planetTextures, (p, t) => (p, t)).ToArray();
+                foreach (var (planet, texture) in planets)
+                {
+                    GameObject gameObject = gameManager.AddBody(
+                        planet.mass,
+                        Utilities.arrayToVector3(planet.position),
+                        Utilities.arrayToVector3(planet.velocity)
+                    );
+                    gameObject.GetComponent<Renderer>().material.mainTexture = texture;
+                    Destroy(gameObject.GetComponent<RandomTexture>());
+                }
                 break;
         }
     }

@@ -1,5 +1,6 @@
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Body : MonoBehaviour
 {
@@ -11,10 +12,12 @@ public class Body : MonoBehaviour
     public string planetName = "Default";
     public GameObject UIDisplay;
 
+    GameManager gameManager;
+
 
     public float Radius
     {
-        get { return Mathf.Pow(3 * mass / 4 / Mathf.PI / Constants.ρ, 1f / 3f); } // m
+        get { return Mathf.Pow(3 * mass / 4 / Mathf.PI / gameManager.constantρ, 1f / 3f); } // m
     }
 
     public Vector3 Momentum
@@ -28,20 +31,21 @@ public class Body : MonoBehaviour
     }
     void Start()
     {
+        gameManager = FindObjectOfType<GameManager>().GetComponent<GameManager>();
+
+        if (position.magnitude == 0) position = transform.position * gameManager.constantκ;
 
         planetList = GameObject.FindGameObjectWithTag("GameManager").GetComponent<PlanetList>();
         int i = Random.Range(0, planetList.nameList.Count);
         planetName = planetList.nameList[i];
         planetList.nameList.Remove(planetList.nameList[i]);
-
         UIDisplay = GameObject.FindGameObjectWithTag("PlanetInfo");
-
-
-
     }
 
     void OnTriggerEnter(Collider other)
     {
+        return;
+
         Body otherBody = other.gameObject.GetComponent<Body>();
 
         if (gameObject.GetInstanceID() < other.gameObject.GetInstanceID()) return;
@@ -62,9 +66,11 @@ public class Body : MonoBehaviour
     {
         Quaternion Δrotation = Quaternion.Euler(angularVelocity * Time.deltaTime);
         transform.rotation = Δrotation * transform.rotation;
-        transform.position = position / Constants.κ;
-        float scale = Radius / Constants.λ;
+        float scale = Mathf.Pow(Mathf.Log10(mass), 2) / gameManager.constantλ;
         transform.localScale = new(scale, scale, scale);
+        transform.position = position / gameManager.constantκ;
+        // transform.position = Utilities.arrayToVector3(Utilities.vector3ToArray(position).Select(x => Mathf.Sign(x) * Mathf.Log(Mathf.Abs(x) + 1) /* * Mathf.Pow(1 + Mathf.Pow(10, -Mathf.Abs(x) + gameManager.constantμ), -1) */).ToArray()) / gameManager.constantκ;
+        // transform.position -= position.magnitude <= 1 ? Vector3.zero : (transform.position / transform.position.magnitude * gameManager.constantμ);
         // TODO: Set scale of collider
     }
 
