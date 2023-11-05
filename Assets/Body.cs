@@ -76,4 +76,14 @@ public class Body : MonoBehaviour
     void MassSlider(){
         
     }
+
+    public void SetValues(float mass1, float distanceFromCamera1, Vector3 initialVelocity1, Vector3 angularVelocity1){
+        mass = mass1;
+        velocity = initialVelocity1;
+        angularVelocity = angularVelocity1;
+
+        //integrate distance from camera
+
+    }
+
 }

@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/BaseUI.uss?fileID=7433441132597879392&amp;guid=07bc59763735ebe428976e213d9ec0f7&amp;type=3#BaseUI" />
+    <ui:VisualElement name="Container" style="flex-grow: 0; height: auto; flex-direction: row; width: auto;">
+        <ui:Button text="Settings" parse-escape-sequences="true" display-tooltip-when-elided="true" name="Settings" class="button" />
+        <ui:Button text="Create Body" parse-escape-sequences="true" display-tooltip-when-elided="true" name="CreateBody" class="button" />
+    </ui:VisualElement>
+</ui:UXML>

@@ -1,0 +1,16 @@
+.button {
+    width: 20%;
+    border-radius: 10px;
+    border: none;
+    padding: 5px;
+    -unity-font-style: bold;
+    background-color: rgb(135, 88, 255);
+    color: rgb(242, 242, 242);
+    -unity-font: url('project://database/Assets/Poppins-Bold.ttf?fileID=12800000&guid=7f2bdc2471b511a4195c0fe22c0894f3&type=3#Poppins-Bold');
+    -unity-font-definition: initial;
+}
+
+.planetname {
+    font-size: 30px;
+    color: rgb(255, 255, 255);
+}
