@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PlanetInfo
   - PublicFunctions
+  - GameManager
   layers:
   - Default
   - TransparentFX
