@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject body;
+    public GameObject bodyPrefab;
 
     public float adjustmentFactor;
 
@@ -22,14 +22,14 @@ public class GameManager : MonoBehaviour
         int iterCount = 500;
         for (int i = 0; i < iterCount; i++)
         {
-            float Δtime = Time.deltaTime / iterCount;
+            float Δtime = Time.deltaTime / iterCount / Constants.ζ;
 
             IEnumerable<Vector3> accelerations = bodies.Select(self =>
             {
                 Vector3 acceleration = bodies.Select(other =>
                 {
                     if (self == other) return Vector3.zero;
-                    Vector3 difference = other.transform.position - self.transform.position;
+                    Vector3 difference = other.position - self.position;
                     float magnitude = Constants.G * other.mass / Mathf.Pow(difference.magnitude, 2);
                     Vector3 orientation = difference / difference.magnitude;
                     return magnitude * orientation;
@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
             foreach (var (b, a) in bodies.Zip(accelerations, (b, a) => (b, a)))
             {
                 b.velocity += a * Δtime;
-                b.transform.position += b.velocity * Δtime;
+                b.position += b.velocity * Δtime;
             };
         }
 
@@ -53,6 +53,15 @@ public class GameManager : MonoBehaviour
         mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
         Debug.Log(mousePosition); //make it spawn in front of camera instead
         mousePosition.z += adjustmentFactor;
-        Instantiate(body, mousePosition, Quaternion.identity);
+        Instantiate(bodyPrefab, mousePosition, Quaternion.identity);
+    }
+
+    public void AddBody(float mass, Vector3 position, Vector3 velocity)
+    {
+        GameObject gameObject = Instantiate(bodyPrefab, position, Quaternion.identity);
+        Body body = gameObject.GetComponent<Body>();
+        body.mass = mass;
+        body.transform.position = position;
+        body.velocity = velocity;
     }
 }

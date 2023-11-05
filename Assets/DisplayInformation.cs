@@ -8,7 +8,7 @@ public class DisplayInformation : MonoBehaviour
     // Start is called before the first frame update
     public GameObject UIDisplay;
 
-   
+
     void Start()
     {
         UIDisplay = GameObject.FindGameObjectWithTag("PlanetInfo");
@@ -18,11 +18,12 @@ public class DisplayInformation : MonoBehaviour
     void Update()
     {
 
-    
+
     }
-    
-    public void DisplayInfo(){
-       //UIDisplay.SetActive(!UIDisplay.activeSelf);
+
+    public void DisplayInfo()
+    {
+        //UIDisplay.SetActive(!UIDisplay.activeSelf);
         UIDisplay.GetComponent<PlanetInfo>().currentPlanet = gameObject;
     }
 }
